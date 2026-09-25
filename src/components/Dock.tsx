@@ -1,12 +1,9 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { dockApps } from './dock/dockApps'
 import { DockIcon } from './DockIcon'
 import './Dock.css'
 
 const ICON = 46
-const GAP = 2
-const PAD_X = 11
-const SEP_EXTRA = 8
 const MAX_SCALE = 1.45
 const RANGE = 132
 
@@ -14,20 +11,12 @@ type Props = {
   onAppClick: (id: string) => void
 }
 
-function centersForList(listLeft: number) {
-  let x = listLeft + PAD_X + ICON / 2
-  return dockApps.map((app) => {
-    if (app.separatorBefore) x += SEP_EXTRA
-    const center = x
-    x += ICON + GAP
-    return center
-  })
-}
-
 export function Dock({ onAppClick }: Props) {
   const railRef = useRef<HTMLDivElement>(null)
+  const mouseXRef = useRef<number | null>(null)
   const [scales, setScales] = useState(() => dockApps.map(() => 1))
   const [tooltip, setTooltip] = useState<string | null>(null)
+  const [hovered, setHovered] = useState(false)
 
   const updateScales = useCallback((clientX: number | null) => {
     const rail = railRef.current
@@ -36,11 +25,11 @@ export function Dock({ onAppClick }: Props) {
       return
     }
 
-    const rect = rail.getBoundingClientRect()
-    const centers = centersForList(rect.left)
-
+    const items = rail.querySelectorAll<HTMLElement>('.dock__item')
     setScales(
-      centers.map((center) => {
+      Array.from(items).map((cell) => {
+        const rect = cell.getBoundingClientRect()
+        const center = rect.left + rect.width / 2
         const d = Math.abs(clientX - center)
         if (d >= RANGE) return 1
         const t = 1 - d / RANGE
@@ -50,16 +39,32 @@ export function Dock({ onAppClick }: Props) {
     )
   }, [])
 
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      if (mouseXRef.current !== null) updateScales(mouseXRef.current)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [hovered, updateScales])
+
+  const handleLeave = () => {
+    mouseXRef.current = null
+    setHovered(false)
+    setScales(dockApps.map(() => 1))
+    setTooltip(null)
+  }
+
   return (
-    <div
-      className="dock-scene"
-      onMouseMove={(e) => updateScales(e.clientX)}
-      onMouseLeave={() => {
-        setScales(dockApps.map(() => 1))
-        setTooltip(null)
-      }}
-    >
-      <div ref={railRef} className="dock">
+    <div className="dock-scene">
+      <div
+        ref={railRef}
+        className={hovered ? 'dock dock--hovered' : 'dock'}
+        onMouseEnter={() => setHovered(true)}
+        onMouseMove={(e) => {
+          mouseXRef.current = e.clientX
+          updateScales(e.clientX)
+        }}
+        onMouseLeave={handleLeave}
+      >
         <ul className="dock__list">
           {dockApps.map((app, i) => {
             const scale = scales[i] ?? 1

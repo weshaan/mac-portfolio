@@ -23,6 +23,19 @@
     0 0 0 0.5px rgba(0, 0, 0, 0.06) inset,
     0 8px 22px rgba(0, 0, 0, 0.16),
     0 2px 4px rgba(0, 0, 0, 0.06);
+  transition:
+    padding 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dock--hovered {
+  padding-left: 18px;
+  padding-right: 18px;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.5),
+    0 0 0 0.5px rgba(0, 0, 0, 0.06) inset,
+    0 10px 28px rgba(0, 0, 0, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .dock::before {
@@ -41,6 +54,11 @@
   gap: var(--dock-gap);
   position: relative;
   z-index: 1;
+  transition: gap 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dock--hovered .dock__list {
+  gap: 8px;
 }
 
 .dock__item {
@@ -52,6 +70,14 @@
 .dock__item--sep {
   margin-left: 4px;
   padding-left: 6px;
+  transition:
+    margin-left 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding-left 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dock--hovered .dock__item--sep {
+  margin-left: 6px;
+  padding-left: 10px;
 }
 
 .dock__divider {
