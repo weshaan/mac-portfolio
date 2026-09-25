@@ -143,7 +143,13 @@ function App() {
       <MenuBar />
       <div className="desktop__chrome">
         <DesktopIcons onOpen={open} />
-        <Widgets />
+        <Widgets
+          onReminder={(action) => {
+            if (action === 'resume') open('resume')
+            else if (action === 'projects') open('projects')
+            else open('mail')
+          }}
+        />
       </div>
       <Dock onAppClick={handleDock} />
       {active && (

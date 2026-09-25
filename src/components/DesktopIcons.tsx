@@ -1,5 +1,4 @@
 import { FolderIcon } from './icons/FolderIcon'
-import { ImagesIcon, LocalhostIcon, MoviesIcon } from './icons/DesktopCustomIcons'
 import './DesktopIcons.css'
 
 export type DesktopItemId = 'resume' | 'projects' | 'images' | 'movies' | 'localhost'
@@ -7,17 +6,16 @@ export type DesktopItemId = 'resume' | 'projects' | 'images' | 'movies' | 'local
 type DesktopItem = {
   id: DesktopItemId
   label: string
-  icon: 'folder' | 'folder-outline' | 'images' | 'movies' | 'localhost'
 }
 
 const ICON = 44
 
 const items: DesktopItem[] = [
-  { id: 'resume', label: 'ResumeOS', icon: 'folder' },
-  { id: 'projects', label: 'BUYC-Corp...lace', icon: 'folder' },
-  { id: 'images', label: 'Images', icon: 'images' },
-  { id: 'movies', label: 'Movies', icon: 'movies' },
-  { id: 'localhost', label: 'Localhost', icon: 'localhost' },
+  { id: 'resume', label: 'ResumeOS' },
+  { id: 'projects', label: 'BUYC-Corp...lace' },
+  { id: 'images', label: 'Images' },
+  { id: 'movies', label: 'Movies' },
+  { id: 'localhost', label: 'Localhost' },
 ]
 
 type Props = {
@@ -31,7 +29,9 @@ export function DesktopIcons({ onOpen }: Props) {
         {items.map((item) => (
           <li key={item.id}>
             <button type="button" className="desktop-icons__item" onClick={() => onOpen(item.id)}>
-              <span className="desktop-icons__icon-wrap">{renderIcon(item.icon)}</span>
+              <span className="desktop-icons__icon-wrap">
+                <FolderIcon size={ICON} />
+              </span>
               <span className="desktop-icons__label">{item.label}</span>
             </button>
           </li>
@@ -39,19 +39,4 @@ export function DesktopIcons({ onOpen }: Props) {
       </ul>
     </div>
   )
-}
-
-function renderIcon(type: DesktopItem['icon']) {
-  switch (type) {
-    case 'folder':
-      return <FolderIcon size={ICON} />
-    case 'folder-outline':
-      return <FolderIcon variant="outline" size={ICON} />
-    case 'images':
-      return <ImagesIcon size={ICON} />
-    case 'movies':
-      return <MoviesIcon size={ICON} />
-    case 'localhost':
-      return <LocalhostIcon size={ICON} />
-  }
 }
