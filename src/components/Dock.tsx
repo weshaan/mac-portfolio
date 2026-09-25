@@ -4,8 +4,8 @@ import { DockIcon } from './DockIcon'
 import './Dock.css'
 
 const ICON = 46
-const MAX_SCALE = 1.45
-const RANGE = 132
+const MAX_SCALE = 1.54
+const RANGE = 142
 
 type Props = {
   onAppClick: (id: string) => void
@@ -68,7 +68,7 @@ export function Dock({ onAppClick }: Props) {
         <ul className="dock__list">
           {dockApps.map((app, i) => {
             const scale = scales[i] ?? 1
-            const lift = (scale - 1) * 18
+            const lift = (scale - 1) * 20
 
             return (
               <li key={app.id} className={app.separatorBefore ? 'dock__item dock__item--sep' : 'dock__item'}>
