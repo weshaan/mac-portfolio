@@ -14,7 +14,7 @@
   /* Global density — lower = smaller UI */
   --ui-scale: 0.8;
 
-  --menu-height: 24px;
+  --menu-height: 28px;
   --dock-icon-size: 46px;
   --dock-gap: 2px;
   --dock-pad-x: 11px;

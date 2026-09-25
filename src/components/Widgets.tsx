@@ -59,7 +59,16 @@ export function Widgets({ onReminder }: Props) {
         </div>
 
         <div className="widget widget--battery">
-          <div className="widget-battery__gauge" style={{ '--level': '4%' } as CSSProperties}>
+          <div
+            className="widget-battery__gauge"
+            style={
+              {
+                '--level': 0.8,
+                '--battery-ring-color': '#34c759',
+                '--battery-label-color': '#34c759',
+              } as CSSProperties
+            }
+          >
             <svg viewBox="0 0 72 72" className="widget-battery__svg" aria-hidden>
               <circle cx="36" cy="36" r="30" className="widget-battery__track" />
               <circle cx="36" cy="36" r="30" className="widget-battery__fill" />
@@ -68,7 +77,7 @@ export function Widgets({ onReminder }: Props) {
               <LaptopIcon />
             </div>
           </div>
-          <span className="widget-battery__pct">4%</span>
+          <span className="widget-battery__pct">80%</span>
         </div>
       </div>
 

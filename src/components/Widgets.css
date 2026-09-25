@@ -180,11 +180,11 @@
 
 .widget-battery__fill {
   fill: none;
-  stroke: #ff453a;
+  stroke: var(--battery-ring-color, #34c759);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-dasharray: 188.5;
-  stroke-dashoffset: calc(188.5 - 188.5 * 0.04);
+  stroke-dashoffset: calc(188.5 - 188.5 * var(--level, 0.8));
 }
 
 .widget-battery__icon {
@@ -198,7 +198,7 @@
 .widget-battery__pct {
   font-size: 15px;
   font-weight: 600;
-  color: #ff453a;
+  color: var(--battery-label-color, #34c759);
   font-variant-numeric: tabular-nums;
 }
 
