@@ -6,6 +6,13 @@
   background: #6e3535;
 }
 
+.desktop__session {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  will-change: filter, transform, opacity;
+}
+
 .desktop__wallpaper {
   position: absolute;
   inset: 0;
@@ -24,6 +31,11 @@
   background: radial-gradient(ellipse 80% 60% at 70% 50%, transparent 30%, rgba(0, 0, 0, 0.12) 100%);
 }
 
+.desktop--locked .desktop__session {
+  filter: blur(16px) saturate(0.88) brightness(0.88);
+  transform: scale(1.025);
+}
+
 .desktop__chrome {
   position: absolute;
   inset: var(--menu-height) 0 0 0;
@@ -33,6 +45,59 @@
 
 .desktop__chrome > * {
   pointer-events: auto;
+}
+
+/* Desktop stays soft until unlock, then snaps into focus */
+.desktop--locked .menu-bar,
+.desktop--locked .desktop__chrome,
+.desktop--locked .dock-scene {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.desktop--awake .desktop__session {
+  animation: desktop-focus-in 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+.desktop--awake .menu-bar,
+.desktop--awake .desktop__chrome,
+.desktop--awake .dock-scene {
+  animation: desktop-ui-focus-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
+@keyframes desktop-focus-in {
+  from {
+    filter: blur(16px) saturate(0.88) brightness(0.88);
+    transform: scale(1.025);
+  }
+  to {
+    filter: blur(0) saturate(1) brightness(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes desktop-ui-focus-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop--awake .desktop__session,
+  .desktop--awake .menu-bar,
+  .desktop--awake .desktop__chrome,
+  .desktop--awake .dock-scene {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .desktop--locked .desktop__session {
+    filter: none;
+    transform: none;
+  }
 }
 
 .terminal-preview {

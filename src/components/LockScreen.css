@@ -1,0 +1,251 @@
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  font-family: var(--mac-font);
+  pointer-events: auto;
+  animation: lock-screen-in 0.5s ease;
+}
+
+.lock-screen--exit {
+  pointer-events: none;
+}
+
+.lock-screen--exit .lock-screen__status {
+  animation: lock-status-out 0.32s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.lock-screen--exit .lock-screen__clock-block {
+  animation: lock-clock-up 0.62s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+.lock-screen--exit .lock-screen__user {
+  animation: lock-user-up 0.58s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+.lock-screen--exit .lock-screen__wallpaper {
+  animation: lock-wallpaper-out 0.92s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lock-screen-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lock-clock-up {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -22vh, 0) scale(0.94);
+    filter: blur(2px);
+  }
+}
+
+@keyframes lock-user-up {
+  from {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-50%, -72px, 0);
+  }
+}
+
+@keyframes lock-status-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes lock-wallpaper-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.lock-screen__wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #6e3535;
+  background-image: url('/mikasa.jpg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: cover;
+  will-change: opacity;
+}
+
+.lock-screen__status {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  will-change: opacity;
+}
+
+.lock-screen__input-source {
+  opacity: 0.95;
+}
+
+.lock-screen__keyboard-icon {
+  opacity: 0.95;
+}
+
+.lock-screen__battery-pct {
+  font-variant-numeric: tabular-nums;
+}
+
+.lock-screen__battery-icon {
+  display: block;
+}
+
+.lock-screen__wifi {
+  display: block;
+}
+
+.lock-screen__clock-block {
+  margin-top: 10vh;
+  text-align: center;
+  user-select: none;
+  will-change: transform, opacity, filter;
+}
+
+.lock-screen__date {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  margin-bottom: 4px;
+}
+
+.lock-screen__time {
+  font-size: clamp(72px, 14vw, 120px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.42);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  font-variant-numeric: tabular-nums;
+}
+
+.lock-screen__user {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: min(320px, 88vw);
+  will-change: transform, opacity;
+}
+
+.lock-screen__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lock-screen__avatar-emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.lock-screen__name {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.lock-screen__unlock {
+  margin-top: 4px;
+  width: 100%;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: rgba(72, 38, 38, 0.55);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lock-screen__unlock:hover,
+.lock-screen__unlock:focus-visible {
+  background: rgba(82, 44, 44, 0.65);
+  color: rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .lock-screen__date {
+    font-size: 20px;
+  }
+
+  .lock-screen__user {
+    bottom: 10%;
+  }
+
+  .lock-screen__status {
+    gap: 6px;
+    font-size: 11px;
+    right: 10px;
+  }
+
+  .lock-screen__input-source {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lock-screen--exit .lock-screen__clock-block,
+  .lock-screen--exit .lock-screen__user,
+  .lock-screen--exit .lock-screen__status,
+  .lock-screen--exit .lock-screen__wallpaper {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+}

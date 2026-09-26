@@ -1,6 +1,7 @@
 import { useCallback, useState, type ReactNode } from 'react'
 import { DesktopIcons, type DesktopItemId } from './components/DesktopIcons'
 import { Dock } from './components/Dock'
+import { LockScreen } from './components/LockScreen'
 import { MacWindow } from './components/MacWindow'
 import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
@@ -101,9 +102,20 @@ Let's build something.`}
 
 function App() {
   const [openWindow, setOpenWindow] = useState<WindowId>(null)
+  const [unlocked, setUnlocked] = useState(false)
+  const [lockExiting, setLockExiting] = useState(false)
 
   const open = useCallback((id: WindowId) => setOpenWindow(id), [])
   const close = useCallback(() => setOpenWindow(null), [])
+
+  const handleUnlock = useCallback(() => {
+    if (lockExiting || unlocked) return
+    setLockExiting(true)
+    window.setTimeout(() => {
+      setUnlocked(true)
+      setLockExiting(false)
+    }, 1000)
+  }, [lockExiting, unlocked])
 
   const handleDock = (id: string) => {
     switch (id) {
@@ -137,26 +149,31 @@ function App() {
 
   const active = openWindow ? windowCopy[openWindow] : null
 
+  const desktopState = unlocked || lockExiting ? 'desktop--awake' : 'desktop--locked'
+
   return (
-    <div className="desktop">
-      <div className="desktop__wallpaper" role="presentation" />
-      <MenuBar />
-      <div className="desktop__chrome">
-        <DesktopIcons onOpen={open} />
-        <Widgets
-          onReminder={(action) => {
-            if (action === 'resume') open('resume')
-            else if (action === 'projects') open('projects')
-            else open('mail')
-          }}
-        />
+    <div className={`desktop ${desktopState}`}>
+      {!unlocked && <LockScreen onUnlock={handleUnlock} exiting={lockExiting} />}
+      <div className="desktop__session">
+        <div className="desktop__wallpaper" role="presentation" />
+        <MenuBar />
+        <div className="desktop__chrome">
+          <DesktopIcons onOpen={open} />
+          <Widgets
+            onReminder={(action) => {
+              if (action === 'resume') open('resume')
+              else if (action === 'projects') open('projects')
+              else open('mail')
+            }}
+          />
+        </div>
+        <Dock onAppClick={handleDock} />
+        {active && (
+          <MacWindow title={active.title} onClose={close}>
+            {active.body}
+          </MacWindow>
+        )}
       </div>
-      <Dock onAppClick={handleDock} />
-      {active && (
-        <MacWindow title={active.title} onClose={close}>
-          {active.body}
-        </MacWindow>
-      )}
     </div>
   )
 }

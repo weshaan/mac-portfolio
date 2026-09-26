@@ -16,5 +16,12 @@ export function useClock() {
   const menuTime = `${hour12}:${minutes} ${ampm}`
   const widgetTime = `${hour12}:${minutes}`
 
-  return { now, menuTime, widgetTime }
+  const lockHours = now.getHours().toString().padStart(2, '0')
+  const lockTime = `${lockHours}:${minutes}`
+
+  const lockDate = now
+    .toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+    .replace(',', '')
+
+  return { now, menuTime, widgetTime, lockTime, lockDate }
 }
