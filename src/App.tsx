@@ -6,6 +6,8 @@ import { LockScreen } from './components/LockScreen'
 import { MacWindow } from './components/MacWindow'
 import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
+import { SystemSettingsPanel } from './components/settings/SystemSettingsPanel'
+import { useWindowTheme } from './context/WindowThemeContext'
 import { useDesktopWindowStack } from './hooks/useDesktopWindowStack'
 import './App.css'
 
@@ -17,7 +19,7 @@ type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings'
 
 type MacWindowId = Exclude<WindowId, 'resume'>
 
-const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
+const windowCopy: Record<MacWindowId, { title: string; body: ReactNode | null }> = {
   projects: {
     title: 'Projects',
     body: (
@@ -97,21 +99,12 @@ Let's build something.`}
   },
   settings: {
     title: 'System Settings',
-    body: (
-      <>
-        <h2>weshaanOS</h2>
-        <p>Appearance, dock, and desktop preferences — customize this portfolio shell here.</p>
-        <ul>
-          <li>Wallpaper: Mikasa</li>
-          <li>Menu bar: maroon glass</li>
-          <li>Dock magnification: on</li>
-        </ul>
-      </>
-    ),
+    body: null,
   },
 }
 
 function App() {
+  const { theme } = useWindowTheme()
   const {
     openIds,
     openWindow,
@@ -224,13 +217,13 @@ function App() {
         onFocus={() => focusWindow(id)}
         onClose={() => closeWindow(id)}
       >
-        {copy.body}
+        {id === 'settings' ? <SystemSettingsPanel /> : copy.body}
       </MacWindow>
     )
   })
 
   return (
-    <div className={`desktop ${desktopState}`}>
+    <div className={`desktop ${desktopState}`} data-window-theme={theme}>
       {!unlocked && <LockScreen onUnlock={handleUnlock} exiting={lockExiting} />}
       {!introDone && <HelloIntro onComplete={() => setIntroDone(true)} />}
       <div className="desktop__session">

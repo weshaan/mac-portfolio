@@ -137,8 +137,8 @@ export function Widgets({ onReminder }: Props) {
 function LaptopIcon() {
   return (
     <svg width="22" height="17" viewBox="0 0 28 22" aria-hidden>
-      <rect x="3" y="2" width="22" height="14" rx="2" fill="none" stroke="rgba(255,255,255,0.92)" strokeWidth="1.4" />
-      <path d="M0 20h28l-2-3H2l-2 3z" fill="rgba(255,255,255,0.88)" />
+      <rect x="3" y="2" width="22" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M0 20h28l-2-3H2l-2 3z" fill="currentColor" />
     </svg>
   )
 }

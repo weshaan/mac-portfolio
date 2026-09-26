@@ -222,6 +222,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .widget-battery__pct {
@@ -396,6 +397,50 @@
 .widget-photos__subtitle {
   font-size: 10px;
   opacity: 0.8;
+}
+
+.desktop[data-window-theme='light'] .widget--calendar {
+  background: rgba(255, 255, 255, 0.84);
+  color: #1d1d1f;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .widget-calendar__next {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .widget--reminders {
+  background: rgba(255, 255, 255, 0.84);
+  color: #1d1d1f;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .widget-reminders__item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.desktop[data-window-theme='light'] .widget-reminders__circle {
+  border-color: rgba(0, 0, 0, 0.32);
+}
+
+.desktop[data-window-theme='light'] .widget--battery {
+  background: rgba(255, 255, 255, 0.84);
+  color: #1d1d1f;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .widget-battery__track {
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+.desktop[data-window-theme='light'] .widget-battery__icon {
+  color: rgba(0, 0, 0, 0.72);
 }
 
 @media (max-width: 800px) {

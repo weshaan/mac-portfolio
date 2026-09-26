@@ -24,7 +24,10 @@
 .desktop-window--panel {
   width: min(440px, 92vw);
   max-height: min(62vh, 520px);
-  background: #ececec;
+  background: #1e1e1e;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.08),
+    0 24px 64px rgba(0, 0, 0, 0.45);
 }
 
 .desktop-window--preview {
@@ -46,8 +49,8 @@
 .desktop-window__titlebar--panel {
   height: 34px;
   padding: 0 12px;
-  background: linear-gradient(180deg, #f6f6f6 0%, #e8e8ea 100%);
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.14);
+  background: linear-gradient(180deg, #3d3d3f 0%, #323234 100%);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.45);
 }
 
 .desktop-window__titlebar--preview {
@@ -128,7 +131,7 @@
 
 .desktop-window--panel .desktop-window__title {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.72);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .desktop-window--preview .desktop-window__title {
@@ -166,8 +169,8 @@
   font-size: 13px;
   line-height: 1.55;
   letter-spacing: -0.01em;
-  color: #1d1d1f;
-  background: #f5f5f7;
+  color: rgba(255, 255, 255, 0.88);
+  background: #2c2c2e;
 }
 
 .desktop-window--panel .desktop-window__body h2 {
@@ -175,16 +178,26 @@
   font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .desktop-window--panel .desktop-window__body p {
   margin-bottom: 12px;
-  color: #515154;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .desktop-window--panel .desktop-window__body ul {
   margin-left: 18px;
-  color: #515154;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.desktop-window--panel .desktop-window__body a {
+  color: #64b5ff;
+  text-decoration: none;
+}
+
+.desktop-window--panel .desktop-window__body a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 640px) {
@@ -196,4 +209,59 @@
   .desktop-window--preview .desktop-window__title {
     max-width: 160px;
   }
+}
+
+/* —— Light window theme —— */
+.desktop[data-window-theme='light'] .desktop-window--panel {
+  background: #ececec;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.18),
+    0 28px 72px rgba(0, 0, 0, 0.32);
+}
+
+.desktop[data-window-theme='light'] .desktop-window--preview {
+  background: #f5f5f7;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.18),
+    0 28px 72px rgba(0, 0, 0, 0.32);
+}
+
+.desktop[data-window-theme='light'] .desktop-window__titlebar--panel {
+  background: linear-gradient(180deg, #f6f6f6 0%, #e8e8ea 100%);
+  border-bottom-color: rgba(0, 0, 0, 0.14);
+}
+
+.desktop[data-window-theme='light'] .desktop-window__titlebar--preview {
+  background: linear-gradient(180deg, #f6f6f6 0%, #e8e8ea 100%);
+  border-bottom-color: rgba(0, 0, 0, 0.14);
+}
+
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__title {
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.desktop[data-window-theme='light'] .desktop-window--preview .desktop-window__title {
+  color: rgba(0, 0, 0, 0.82);
+}
+
+.desktop[data-window-theme='light'] .desktop-window__subtitle {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__body {
+  color: #1d1d1f;
+  background: #f5f5f7;
+}
+
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__body h2 {
+  color: #1d1d1f;
+}
+
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__body p,
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__body ul {
+  color: #515154;
+}
+
+.desktop[data-window-theme='light'] .desktop-window--panel .desktop-window__body a {
+  color: #007aff;
 }

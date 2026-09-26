@@ -70,3 +70,23 @@
 .resume-pdf__status--error {
   color: #ff6b6b;
 }
+
+.desktop[data-window-theme='light'] .resume-pdf__zoom-btn,
+.desktop[data-window-theme='light'] .resume-pdf__zoom-pct {
+  color: rgba(0, 0, 0, 0.78);
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .resume-pdf__zoom-btn:hover,
+.desktop[data-window-theme='light'] .resume-pdf__zoom-pct:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.desktop[data-window-theme='light'] .resume-pdf__viewport {
+  background: #e8e8ed;
+}
+
+.desktop[data-window-theme='light'] .resume-pdf__status {
+  color: rgba(0, 0, 0, 0.5);
+}

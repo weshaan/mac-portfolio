@@ -13,7 +13,7 @@ export const RESUME_PDF_URL = '/desktop/Eshaan_Walia_resume.pdf'
 export const RESUME_PDF_NAME = 'Eshaan_Walia_resume.pdf'
 
 const DEFAULT_ZOOM = 0.75
-const MIN_ZOOM = 0.6
+const MIN_ZOOM = 0.3
 const MAX_ZOOM = 2
 const ZOOM_STEP = 0.15
 /** CSS layout scale at 100% zoom — bitmap is rendered at higher DPR. */
