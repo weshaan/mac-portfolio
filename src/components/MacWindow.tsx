@@ -1,26 +1,40 @@
 import type { ReactNode } from 'react'
-import './MacWindow.css'
+import { DesktopWindow } from './desktop/DesktopWindow'
+import type { WindowPoint } from '../hooks/useDraggableWindow'
 
 type Props = {
+  windowId: string
   title: string
-  children: ReactNode
+  zIndex: number
+  position: WindowPoint
+  onPositionChange: (point: WindowPoint) => void
+  onFocus: () => void
   onClose: () => void
+  children: ReactNode
 }
 
-export function MacWindow({ title, children, onClose }: Props) {
+export function MacWindow({
+  windowId,
+  title,
+  zIndex,
+  position,
+  onPositionChange,
+  onFocus,
+  onClose,
+  children,
+}: Props) {
   return (
-    <div className="mac-window-overlay" role="dialog" aria-modal="true" aria-label={title}>
-      <div className="mac-window">
-        <header className="mac-window__titlebar">
-          <div className="mac-window__traffic">
-            <button type="button" className="mac-window__dot mac-window__dot--close" onClick={onClose} aria-label="Close" />
-            <button type="button" className="mac-window__dot mac-window__dot--min" aria-label="Minimize" />
-            <button type="button" className="mac-window__dot mac-window__dot--max" aria-label="Zoom" />
-          </div>
-          <span className="mac-window__title">{title}</span>
-        </header>
-        <div className="mac-window__content">{children}</div>
-      </div>
-    </div>
+    <DesktopWindow
+      windowId={windowId}
+      title={title}
+      variant="panel"
+      zIndex={zIndex}
+      position={position}
+      onPositionChange={onPositionChange}
+      onFocus={onFocus}
+      onClose={onClose}
+    >
+      {children}
+    </DesktopWindow>
   )
 }

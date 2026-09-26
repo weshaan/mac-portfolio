@@ -1,17 +1,21 @@
-import { useCallback, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useCallback, useState, type ReactNode } from 'react'
 import { DesktopIcons, type DesktopItemId } from './components/DesktopIcons'
 import { Dock } from './components/Dock'
 import { HelloIntro } from './components/HelloIntro'
 import { LockScreen } from './components/LockScreen'
 import { MacWindow } from './components/MacWindow'
-import { ResumePdfWindow } from './components/ResumePdfWindow'
 import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
+import { useDesktopWindowStack } from './hooks/useDesktopWindowStack'
 import './App.css'
 
-type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings' | null
+const ResumePdfWindow = lazy(() =>
+  import('./components/ResumePdfWindow').then((m) => ({ default: m.ResumePdfWindow })),
+)
 
-type MacWindowId = Exclude<WindowId, null | 'resume'>
+type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings'
+
+type MacWindowId = Exclude<WindowId, 'resume'>
 
 const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
   projects: {
@@ -102,13 +106,26 @@ Let's build something.`}
 }
 
 function App() {
-  const [openWindow, setOpenWindow] = useState<WindowId>(null)
+  const {
+    openIds,
+    openWindow,
+    closeWindow,
+    focusWindow,
+    positions,
+    setWindowPosition,
+    zById,
+  } = useDesktopWindowStack()
+
   const [introDone, setIntroDone] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
   const [lockExiting, setLockExiting] = useState(false)
 
-  const open = useCallback((id: WindowId) => setOpenWindow(id), [])
-  const close = useCallback(() => setOpenWindow(null), [])
+  const open = useCallback(
+    (id: WindowId | null) => {
+      if (id) openWindow(id)
+    },
+    [openWindow],
+  )
 
   const handleUnlock = useCallback(() => {
     if (lockExiting || unlocked) return
@@ -152,10 +169,45 @@ function App() {
     }
   }
 
-  const active =
-    openWindow && openWindow !== 'resume' ? windowCopy[openWindow as MacWindowId] : null
-
   const desktopState = unlocked || lockExiting ? 'desktop--awake' : 'desktop--locked'
+
+  const windowLayer = openIds.map((id) => {
+    const position = positions[id] ?? { x: 80, y: 72 }
+    const zIndex = zById[id] ?? 60
+
+    if (id === 'resume') {
+      return (
+        <Suspense key={id} fallback={null}>
+          <ResumePdfWindow
+            windowId={id}
+            zIndex={zIndex}
+            position={position}
+            onPositionChange={(p) => setWindowPosition(id, p)}
+            onFocus={() => focusWindow(id)}
+            onClose={() => closeWindow(id)}
+          />
+        </Suspense>
+      )
+    }
+
+    const copy = windowCopy[id as MacWindowId]
+    if (!copy) return null
+
+    return (
+      <MacWindow
+        key={id}
+        windowId={id}
+        title={copy.title}
+        zIndex={zIndex}
+        position={position}
+        onPositionChange={(p) => setWindowPosition(id, p)}
+        onFocus={() => focusWindow(id)}
+        onClose={() => closeWindow(id)}
+      >
+        {copy.body}
+      </MacWindow>
+    )
+  })
 
   return (
     <div className={`desktop ${desktopState}`}>
@@ -176,12 +228,7 @@ function App() {
           />
         </div>
         <Dock onAppClick={handleDock} />
-        {openWindow === 'resume' && <ResumePdfWindow onClose={close} />}
-        {active && (
-          <MacWindow title={active.title} onClose={close}>
-            {active.body}
-          </MacWindow>
-        )}
+        {windowLayer.length > 0 && <div className="desktop-windows">{windowLayer}</div>}
       </div>
     </div>
   )

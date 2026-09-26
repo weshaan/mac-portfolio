@@ -47,6 +47,17 @@
   pointer-events: auto;
 }
 
+.desktop-windows {
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+}
+
+.desktop-windows > * {
+  pointer-events: auto;
+}
+
 /* Desktop stays soft until unlock, then snaps into focus */
 .desktop--locked .menu-bar,
 .desktop--locked .desktop__chrome,

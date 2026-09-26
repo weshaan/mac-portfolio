@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as pdfjs from 'pdfjs-dist'
+import { DesktopWindow } from './desktop/DesktopWindow'
+import type { WindowPoint } from '../hooks/useDraggableWindow'
 import './ResumePdfWindow.css'
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -18,10 +20,22 @@ const ZOOM_STEP = 0.15
 const DISPLAY_SCALE = 1.5
 
 type Props = {
+  windowId: string
+  zIndex: number
+  position: WindowPoint
+  onPositionChange: (point: WindowPoint) => void
+  onFocus: () => void
   onClose: () => void
 }
 
-export function ResumePdfWindow({ onClose }: Props) {
+export function ResumePdfWindow({
+  windowId,
+  zIndex,
+  position,
+  onPositionChange,
+  onFocus,
+  onClose,
+}: Props) {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM)
   const [pageCount, setPageCount] = useState(1)
   const [loading, setLoading] = useState(true)
@@ -97,45 +111,40 @@ export function ResumePdfWindow({ onClose }: Props) {
   const zoomReset = () => setZoom(DEFAULT_ZOOM)
 
   const zoomLabel = `${Math.round(zoom * 100)}%`
+  const pageMeta = `${pageCount} ${pageCount === 1 ? 'page' : 'pages'}`
+
+  const zoomToolbar = (
+    <div className="resume-pdf__zoom" aria-label="Zoom">
+      <button type="button" className="resume-pdf__zoom-btn" onClick={zoomOut} aria-label="Zoom out">
+        −
+      </button>
+      <button type="button" className="resume-pdf__zoom-pct" onClick={zoomReset} aria-label="Reset zoom">
+        {zoomLabel}
+      </button>
+      <button type="button" className="resume-pdf__zoom-btn" onClick={zoomIn} aria-label="Zoom in">
+        +
+      </button>
+    </div>
+  )
 
   return (
-    <div className="resume-pdf-overlay" role="dialog" aria-modal="true" aria-label={RESUME_PDF_NAME}>
-      <div className="resume-pdf">
-        <header className="resume-pdf__toolbar">
-          <div className="resume-pdf__traffic">
-            <button
-              type="button"
-              className="resume-pdf__dot resume-pdf__dot--close"
-              onClick={onClose}
-              aria-label="Close"
-            />
-            <span className="resume-pdf__dot resume-pdf__dot--min" aria-hidden />
-            <span className="resume-pdf__dot resume-pdf__dot--max" aria-hidden />
-          </div>
-          <div className="resume-pdf__title-block">
-            <span className="resume-pdf__filename">{RESUME_PDF_NAME}</span>
-            <span className="resume-pdf__meta">
-              {pageCount} {pageCount === 1 ? 'page' : 'pages'}
-            </span>
-          </div>
-          <div className="resume-pdf__zoom" aria-label="Zoom">
-            <button type="button" className="resume-pdf__zoom-btn" onClick={zoomOut} aria-label="Zoom out">
-              −
-            </button>
-            <button type="button" className="resume-pdf__zoom-pct" onClick={zoomReset} aria-label="Reset zoom">
-              {zoomLabel}
-            </button>
-            <button type="button" className="resume-pdf__zoom-btn" onClick={zoomIn} aria-label="Zoom in">
-              +
-            </button>
-          </div>
-        </header>
-        <div className="resume-pdf__viewport">
-          {loading && <p className="resume-pdf__status">Loading…</p>}
-          {error && <p className="resume-pdf__status resume-pdf__status--error">{error}</p>}
-          <div ref={pagesRef} className="resume-pdf__pages" hidden={loading || Boolean(error)} />
-        </div>
+    <DesktopWindow
+      windowId={windowId}
+      title={RESUME_PDF_NAME}
+      subtitle={pageMeta}
+      variant="preview"
+      zIndex={zIndex}
+      position={position}
+      onPositionChange={onPositionChange}
+      onFocus={onFocus}
+      onClose={onClose}
+      toolbarEnd={zoomToolbar}
+    >
+      <div className="resume-pdf__viewport">
+        {loading && <p className="resume-pdf__status">Loading…</p>}
+        {error && <p className="resume-pdf__status resume-pdf__status--error">{error}</p>}
+        <div ref={pagesRef} className="resume-pdf__pages" hidden={loading || Boolean(error)} />
       </div>
-    </div>
+    </DesktopWindow>
   )
 }
