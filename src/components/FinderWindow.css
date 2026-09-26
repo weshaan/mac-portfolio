@@ -1,0 +1,114 @@
+.finder-sidebar__section + .finder-sidebar__section {
+  margin-top: 10px;
+}
+
+.finder-sidebar__heading {
+  margin: 0 0 4px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.finder-sidebar__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.finder-sidebar__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: left;
+  cursor: pointer;
+}
+
+.finder-sidebar__row--selected {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.finder-sidebar__icon {
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+.finder-grid {
+  padding: 20px 24px 28px;
+}
+
+.finder-grid__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--finder-icon-size) + 36px), 1fr));
+  gap: 8px 12px;
+  justify-items: center;
+}
+
+.finder-grid__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  max-width: 132px;
+  padding: 8px 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: default;
+  font-family: inherit;
+}
+
+.finder-grid__icon {
+  display: block;
+  width: var(--finder-icon-size);
+  height: var(--finder-icon-size);
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.28));
+}
+
+.finder-grid__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.finder-grid__item:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.finder-grid__label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  word-break: break-word;
+}
+
+.finder-grid__empty {
+  margin: 48px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: -0.01em;
+}
+
+.finder-window .browser-window__icon-slider input[type='range'] {
+  --range-pct: 50%;
+}

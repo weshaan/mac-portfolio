@@ -26,6 +26,7 @@ function aboutWindowPosition(): WindowPoint {
 
 const defaultPositions: Record<string, () => WindowPoint> = {
   resume: () => centerWindow(720, 640),
+  finder: () => centerWindow(920, 560),
   profile: aboutWindowPosition,
 }
 

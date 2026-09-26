@@ -3,6 +3,7 @@ import { DesktopIcons, type DesktopItemId } from './components/DesktopIcons'
 import { Dock } from './components/Dock'
 import { HelloIntro } from './components/HelloIntro'
 import { LockScreen } from './components/LockScreen'
+import { FinderWindow } from './components/FinderWindow'
 import { MacWindow } from './components/MacWindow'
 import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
@@ -15,9 +16,9 @@ const ResumePdfWindow = lazy(() =>
   import('./components/ResumePdfWindow').then((m) => ({ default: m.ResumePdfWindow })),
 )
 
-type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings'
+type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings' | 'finder'
 
-type MacWindowId = Exclude<WindowId, 'resume'>
+type MacWindowId = Exclude<WindowId, 'resume' | 'finder'>
 
 const windowCopy: Record<MacWindowId, { title: string; body: ReactNode | null }> = {
   projects: {
@@ -161,7 +162,7 @@ function App() {
         open('localhost')
         break
       case 'finder':
-        open('resume')
+        open('finder')
         break
       case 'notes':
         open('projects')
@@ -187,6 +188,21 @@ function App() {
   const windowLayer = openIds.map((id) => {
     const position = positions[id] ?? { x: 80, y: 72 }
     const zIndex = zById[id] ?? 60
+
+    if (id === 'finder') {
+      return (
+        <FinderWindow
+          key={id}
+          windowId={id}
+          zIndex={zIndex}
+          position={position}
+          onPositionChange={(p) => setWindowPosition(id, p)}
+          onFocus={() => focusWindow(id)}
+          onClose={() => closeWindow(id)}
+          onOpenItem={(itemId) => openWindow(itemId)}
+        />
+      )
+    }
 
     if (id === 'resume') {
       return (
