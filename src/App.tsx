@@ -1,6 +1,7 @@
 import { useCallback, useState, type ReactNode } from 'react'
 import { DesktopIcons, type DesktopItemId } from './components/DesktopIcons'
 import { Dock } from './components/Dock'
+import { HelloIntro } from './components/HelloIntro'
 import { LockScreen } from './components/LockScreen'
 import { MacWindow } from './components/MacWindow'
 import { MenuBar } from './components/MenuBar'
@@ -102,6 +103,7 @@ Let's build something.`}
 
 function App() {
   const [openWindow, setOpenWindow] = useState<WindowId>(null)
+  const [introDone, setIntroDone] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
   const [lockExiting, setLockExiting] = useState(false)
 
@@ -154,6 +156,7 @@ function App() {
   return (
     <div className={`desktop ${desktopState}`}>
       {!unlocked && <LockScreen onUnlock={handleUnlock} exiting={lockExiting} />}
+      {!introDone && <HelloIntro onComplete={() => setIntroDone(true)} />}
       <div className="desktop__session">
         <div className="desktop__wallpaper" role="presentation" />
         <MenuBar />
