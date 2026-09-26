@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useClock } from '../hooks/useClock'
 import { BatteryMenuIcon, WifiMenuIcon } from './menuBar/MenuBarIcons'
 import './LockScreen.css'
@@ -10,25 +10,36 @@ type Props = {
 
 export function LockScreen({ onUnlock, exiting }: Props) {
   const { lockTime, lockDate } = useClock()
-  const unlockRef = useRef<HTMLButtonElement>(null)
+  const screenRef = useRef<HTMLDivElement>(null)
+
+  const tryUnlock = useCallback(() => {
+    if (exiting) return
+    onUnlock()
+  }, [exiting, onUnlock])
 
   useEffect(() => {
-    unlockRef.current?.focus()
+    screenRef.current?.focus()
   }, [])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.repeat) {
-        e.preventDefault()
-        onUnlock()
-      }
+      if (e.repeat) return
+      tryUnlock()
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [onUnlock])
+  }, [tryUnlock])
 
   return (
-    <div className={exiting ? 'lock-screen lock-screen--exit' : 'lock-screen'} role="dialog" aria-modal="true" aria-label="Locked">
+    <div
+      ref={screenRef}
+      tabIndex={-1}
+      className={exiting ? 'lock-screen lock-screen--exit' : 'lock-screen'}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Locked. Click anywhere or press any key to continue."
+      onClick={tryUnlock}
+    >
       <div className="lock-screen__wallpaper" role="presentation" />
 
       <div className="lock-screen__status" aria-hidden>
@@ -49,14 +60,7 @@ export function LockScreen({ onUnlock, exiting }: Props) {
           <span className="lock-screen__avatar-emoji">🦚</span>
         </div>
         <p className="lock-screen__name">Eshaan Walia</p>
-        <button
-          ref={unlockRef}
-          type="button"
-          className="lock-screen__unlock"
-          onClick={onUnlock}
-        >
-          Press Enter to unlock
-        </button>
+        <p className="lock-screen__hint">Click anywhere to continue</p>
       </div>
     </div>
   )

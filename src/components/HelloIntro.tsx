@@ -2,6 +2,9 @@ import { useCallback, useRef, useState } from 'react'
 import gsap from 'gsap'
 import './HelloIntro.css'
 
+const HELLO_SVG = '/hello/hello-en.svg'
+const HELLO_TIME_SCALE = 8.2
+
 type Props = {
   onComplete: () => void
 }
@@ -25,38 +28,40 @@ export function HelloIntro({ onComplete }: Props) {
     const stage = stageRef.current
     if (!stage) return
 
+    ctxRef.current?.revert()
+    ctxRef.current = gsap.context(() => {}, stage)
+
     try {
-      const res = await fetch('/hello-text.svg')
-      if (!res.ok) throw new Error('hello svg missing')
+      const res = await fetch(HELLO_SVG)
+      if (!res.ok) throw new Error('missing hello svg')
       stage.innerHTML = await res.text()
+
+      const svg = stage.querySelector('#hello-text')
+      const ellipses = stage.querySelectorAll('ellipse')
+      if (!svg || ellipses.length === 0) {
+        finishIntro()
+        return
+      }
+
+      await new Promise<void>((resolve) => {
+        gsap.set(ellipses, { autoAlpha: 0 })
+        gsap.set(svg, { scale: 0.5, transformOrigin: '50% 50%' })
+
+        const tl = gsap.timeline({ onComplete: resolve })
+        tl.to(ellipses, {
+          autoAlpha: 1,
+          duration: 1,
+          stagger: 0.05,
+          ease: 'power4.out',
+        }).from(svg, { scale: 0, duration: 50, transformOrigin: '50% 50%' }, '<')
+
+        tl.timeScale(HELLO_TIME_SCALE)
+      })
+
+      finishIntro()
     } catch {
       finishIntro()
-      return
     }
-
-    const svg = stage.querySelector('#hello-text')
-    const ellipses = stage.querySelectorAll('ellipse')
-    if (!svg || ellipses.length === 0) {
-      finishIntro()
-      return
-    }
-
-    ctxRef.current?.revert()
-    ctxRef.current = gsap.context(() => {
-      gsap.set(ellipses, { autoAlpha: 0 })
-      gsap.set(svg, { scale: 0.5, transformOrigin: '50% 50%' })
-
-      const tl = gsap.timeline({ onComplete: finishIntro })
-
-      tl.to(ellipses, {
-        autoAlpha: 1,
-        duration: 1,
-        stagger: 0.05,
-        ease: 'power4.out',
-      }).from(svg, { scale: 0, duration: 50, transformOrigin: '50% 50%' }, '<')
-
-      tl.timeScale(8)
-    }, stage)
   }, [finishIntro])
 
   const handlePowerClick = () => {
@@ -88,30 +93,36 @@ export function HelloIntro({ onComplete }: Props) {
         disabled={phase !== 'idle'}
         aria-label="Power on"
       >
-        <span className="hello-intro__power-glow" aria-hidden />
-        <span className="hello-intro__power-ring" aria-hidden />
-        <PowerIcon />
+        <span className="hello-intro__power-hit">
+          <span className="hello-intro__power-glow" aria-hidden />
+          <span className="hello-intro__power-ring" aria-hidden />
+          <PowerIcon />
+        </span>
       </button>
-      <div ref={stageRef} className="hello-intro__stage" aria-hidden={phase === 'idle'} />
+      <div
+        ref={stageRef}
+        className="hello-intro__stage"
+        aria-hidden={phase === 'idle'}
+      />
     </div>
   )
 }
 
 function PowerIcon() {
   return (
-    <svg className="hello-intro__power-icon" width="28" height="28" viewBox="0 0 24 24" aria-hidden>
+    <svg className="hello-intro__power-icon" viewBox="0 0 24 24" aria-hidden>
       <path
-        d="M12 3v6"
+        d="M12 4.25v5.75"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.75"
+        strokeWidth="1.65"
         strokeLinecap="round"
       />
       <path
-        d="M7.5 6.2a6.5 6.5 0 1010 0"
+        d="M8.1 8.35a5.9 5.9 0 1 0 7.8 0"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.75"
+        strokeWidth="1.65"
         strokeLinecap="round"
       />
     </svg>

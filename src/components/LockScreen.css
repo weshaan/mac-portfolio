@@ -8,7 +8,12 @@
   color: #fff;
   font-family: var(--mac-font);
   pointer-events: auto;
+  cursor: pointer;
   animation: lock-screen-in 0.5s ease;
+}
+
+.lock-screen:focus {
+  outline: none;
 }
 
 .lock-screen--exit {
@@ -190,7 +195,7 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
-.lock-screen__unlock {
+.lock-screen__hint {
   margin-top: 4px;
   width: 100%;
   padding: 11px 20px;
@@ -204,20 +209,8 @@
   font-weight: 400;
   letter-spacing: -0.01em;
   text-align: center;
-  cursor: pointer;
-  transition:
-    background 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease;
+  pointer-events: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.lock-screen__unlock:hover,
-.lock-screen__unlock:focus-visible {
-  background: rgba(82, 44, 44, 0.65);
-  color: rgba(255, 255, 255, 0.78);
-  border-color: rgba(255, 255, 255, 0.2);
-  outline: none;
 }
 
 @media (max-width: 640px) {
