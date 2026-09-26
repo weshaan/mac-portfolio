@@ -15,7 +15,7 @@ type MacWindowId = Exclude<WindowId, null | 'resume'>
 
 const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
   projects: {
-    title: 'BUYC-Corp Marketplace',
+    title: 'Projects',
     body: (
       <>
         <h2>Projects</h2>

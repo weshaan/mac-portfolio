@@ -12,7 +12,7 @@ const ICON = 44
 
 const items: DesktopItem[] = [
   { id: 'resume', label: 'Resume' },
-  { id: 'projects', label: 'BUYC-Corp...lace' },
+  { id: 'projects', label: 'Projects' },
   { id: 'images', label: 'Images' },
   { id: 'movies', label: 'Movies' },
   { id: 'localhost', label: 'Localhost' },
@@ -28,15 +28,25 @@ export function DesktopIcons({ onOpen }: Props) {
       <ul className="desktop-icons__list">
         {items.map((item) => (
           <li key={item.id}>
-            <button type="button" className="desktop-icons__item" onClick={() => onOpen(item.id)}>
-              <span className="desktop-icons__icon-wrap">
+            <button
+              type="button"
+              className={
+                item.id === 'resume' ? 'desktop-icons__item desktop-icons__item--document' : 'desktop-icons__item'
+              }
+              onClick={() => onOpen(item.id)}
+            >
+              <span
+                className={
+                  item.id === 'resume'
+                    ? 'desktop-icons__icon-wrap desktop-icons__icon-wrap--document'
+                    : 'desktop-icons__icon-wrap'
+                }
+              >
                 {item.id === 'resume' ? (
                   <img
                     src="/desktop/resume-pdf.png"
                     alt=""
-                    className="desktop-icons__file-icon"
-                    width={ICON}
-                    height={ICON}
+                    className="desktop-icons__file-icon desktop-icons__file-icon--resume"
                     draggable={false}
                   />
                 ) : (
