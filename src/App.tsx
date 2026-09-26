@@ -23,7 +23,7 @@ const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
     body: (
       <>
         <h2>Projects</h2>
-        <p>Featured work and case studies live in this folder. Add screenshots, tech stack, and links to repos or demos.</p>
+        <p>Featured work and case studies live in this folder. Adding screenshots, tech stack, and links to repos or demos.</p>
       </>
     ),
   },
@@ -60,9 +60,9 @@ const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
       <>
         <h2>Contact</h2>
         <p>
-          Reach out at{' '}
-          <a href="mailto:hello@example.com">hello@example.com</a>
-          — replace with your address.
+          Like what you see? Let me know at{' '}
+          <a href="mailto:weshaan108@gmail.com">weshaan108@gmail.com</a>{' '}
+          :)
         </p>
       </>
     ),
@@ -85,7 +85,13 @@ Let's build something.`}
     body: (
       <>
         <h2>Hello</h2>
-        <p>I'm a developer. This desktop is my portfolio home screen — explore folders and dock apps to learn more.</p>
+        <p>
+          I'm the developer. This desktop is my personal portfolio. Explore folders and dock apps to learn more ;)
+        </p>
+        <p>
+          P.S. if you're just here for a quick look of my work, please use the quick actions widget on the right for a
+          speedy peek!
+        </p>
       </>
     ),
   },

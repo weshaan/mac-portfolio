@@ -14,12 +14,13 @@ function centerWindow(width: number, height: number): WindowPoint {
   return { x, y }
 }
 
-/** Lower-left welcome placement — just right of desktop icons, below mid-screen. */
+/** Welcome About — horizontally centered on screen, upper workspace. */
 function aboutWindowPosition(): WindowPoint {
-  if (typeof window === 'undefined') return { x: 184, y: 500 }
+  if (typeof window === 'undefined') return { x: 400, y: 140 }
   const menu = 28
-  const x = 184
-  const y = Math.max(menu + 12, Math.round(window.innerHeight * 0.57))
+  const width = Math.min(440, Math.round(window.innerWidth * 0.92))
+  const x = Math.round((window.innerWidth - width) / 2)
+  const y = Math.round(menu + window.innerHeight * 0.11)
   return { x, y }
 }
 
