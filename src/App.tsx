@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { DesktopIcons, type DesktopItemId } from './components/DesktopIcons'
 import { Dock } from './components/Dock'
 import { HelloIntro } from './components/HelloIntro'
@@ -119,6 +119,13 @@ function App() {
   const [introDone, setIntroDone] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
   const [lockExiting, setLockExiting] = useState(false)
+  const aboutWelcomeOpened = useRef(false)
+
+  useEffect(() => {
+    if (!unlocked || aboutWelcomeOpened.current) return
+    aboutWelcomeOpened.current = true
+    openWindow('profile')
+  }, [unlocked, openWindow])
 
   const open = useCallback(
     (id: WindowId | null) => {

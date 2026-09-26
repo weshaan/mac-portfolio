@@ -14,12 +14,22 @@ function centerWindow(width: number, height: number): WindowPoint {
   return { x, y }
 }
 
-const defaultPositions: Record<string, WindowPoint> = {
-  resume: centerWindow(720, 640),
+/** Lower-left welcome placement — just right of desktop icons, below mid-screen. */
+function aboutWindowPosition(): WindowPoint {
+  if (typeof window === 'undefined') return { x: 184, y: 500 }
+  const menu = 28
+  const x = 184
+  const y = Math.max(menu + 12, Math.round(window.innerHeight * 0.57))
+  return { x, y }
+}
+
+const defaultPositions: Record<string, () => WindowPoint> = {
+  resume: () => centerWindow(720, 640),
+  profile: aboutWindowPosition,
 }
 
 function defaultPositionFor(id: DesktopWindowId): WindowPoint {
-  return defaultPositions[id] ?? centerWindow(440, 360)
+  return defaultPositions[id]?.() ?? centerWindow(440, 360)
 }
 
 export function useDesktopWindowStack() {
