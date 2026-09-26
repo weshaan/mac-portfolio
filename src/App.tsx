@@ -4,30 +4,16 @@ import { Dock } from './components/Dock'
 import { HelloIntro } from './components/HelloIntro'
 import { LockScreen } from './components/LockScreen'
 import { MacWindow } from './components/MacWindow'
+import { ResumePdfWindow } from './components/ResumePdfWindow'
 import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
 import './App.css'
 
 type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings' | null
 
-const windowCopy: Record<Exclude<WindowId, null>, { title: string; body: ReactNode }> = {
-  resume: {
-    title: 'ResumeOS',
-    body: (
-      <>
-        <h2>Resume</h2>
-        <p>
-          Developer portfolio — swap this window with your CV summary, experience, and skills. Link to a PDF
-          or embed your full resume here.
-        </p>
-        <ul>
-          <li>Full-stack development</li>
-          <li>UI engineering &amp; design systems</li>
-          <li>Open to collaborations</li>
-        </ul>
-      </>
-    ),
-  },
+type MacWindowId = Exclude<WindowId, null | 'resume'>
+
+const windowCopy: Record<MacWindowId, { title: string; body: ReactNode }> = {
   projects: {
     title: 'BUYC-Corp Marketplace',
     body: (
@@ -166,7 +152,8 @@ function App() {
     }
   }
 
-  const active = openWindow ? windowCopy[openWindow] : null
+  const active =
+    openWindow && openWindow !== 'resume' ? windowCopy[openWindow as MacWindowId] : null
 
   const desktopState = unlocked || lockExiting ? 'desktop--awake' : 'desktop--locked'
 
@@ -189,6 +176,7 @@ function App() {
           />
         </div>
         <Dock onAppClick={handleDock} />
+        {openWindow === 'resume' && <ResumePdfWindow onClose={close} />}
         {active && (
           <MacWindow title={active.title} onClose={close}>
             {active.body}

@@ -43,6 +43,13 @@
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.28));
 }
 
+.desktop-icons__file-icon {
+  display: block;
+  width: var(--desktop-icon-size);
+  height: var(--desktop-icon-size);
+  object-fit: contain;
+}
+
 .desktop-icons__label {
   font-size: 11px;
   font-weight: 500;

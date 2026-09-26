@@ -142,9 +142,30 @@
   opacity: 0.55;
 }
 
+.widget-clock__seconds {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  transition: transform 1s linear;
+}
+
+.widget-clock__seconds-dot {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+}
+
 .widget-clock__time {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   font-family: var(--mac-font);
   font-size: 26px;
   font-weight: 700;
@@ -387,6 +408,12 @@
 
   .widget-clock__time {
     font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .widget-clock__seconds {
+    transition: none;
   }
 }
 

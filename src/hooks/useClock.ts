@@ -23,5 +23,7 @@ export function useClock() {
     .toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
     .replace(',', '')
 
-  return { now, menuTime, widgetTime, lockTime, lockDate }
+  const seconds = now.getSeconds()
+
+  return { now, menuTime, widgetTime, lockTime, lockDate, seconds }
 }

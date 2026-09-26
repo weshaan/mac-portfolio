@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { useClock } from '../hooks/useClock'
+import { useSecondHandRotation } from '../hooks/useSecondHandRotation'
 import { CloudIcon, MoonIcon, PartlyCloudyIcon } from './icons/WeatherSymbols'
 import './Widgets.css'
 
@@ -25,7 +26,8 @@ const reminders: { id: ReminderAction; label: string; list: string }[] = [
 ]
 
 export function Widgets({ onReminder }: Props) {
-  const { widgetTime, now } = useClock()
+  const { widgetTime, now, seconds } = useClock()
+  const secondHandRotation = useSecondHandRotation(seconds)
   const dayName = now.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()
   const dayNum = now.getDate()
 
@@ -55,6 +57,13 @@ export function Widgets({ onReminder }: Props) {
         <div className="widget widget--clock">
           <div className="widget-clock__face">
             <div className="widget-clock__ticks" aria-hidden />
+            <div
+              className="widget-clock__seconds"
+              style={{ transform: `rotate(${secondHandRotation}deg)` }}
+              aria-hidden
+            >
+              <span className="widget-clock__seconds-dot" />
+            </div>
             <time className="widget-clock__time">{widgetTime}</time>
           </div>
         </div>
