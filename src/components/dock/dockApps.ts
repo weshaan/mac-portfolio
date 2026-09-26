@@ -18,5 +18,6 @@ export const dockApps: DockApp[] = [
   { id: 'mail', label: 'Mail', icon: '/dock/mail.png' },
   { id: 'notes', label: 'Notes', icon: '/dock/notes.png' },
   { id: 'terminal', label: 'Terminal', icon: '/dock/terminal.png', running: true },
+  { id: 'settings', label: 'System Settings', icon: '/dock/settings.png' },
   { id: 'trash', label: 'Bin', icon: '/dock/trash.png', separatorBefore: true },
 ]

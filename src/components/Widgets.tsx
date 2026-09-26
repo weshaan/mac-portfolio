@@ -11,7 +11,7 @@ const forecast = [
   { time: '4AM', Icon: MoonIcon, temp: 20 },
 ] as const
 
-export type ReminderAction = 'resume' | 'projects' | 'mail'
+export type ReminderAction = 'resume' | 'profile' | 'projects' | 'mail'
 
 type Props = {
   onReminder: (action: ReminderAction) => void
@@ -19,6 +19,7 @@ type Props = {
 
 const reminders: { id: ReminderAction; label: string; list: string }[] = [
   { id: 'resume', label: 'Open resume', list: 'Portfolio' },
+  { id: 'profile', label: 'View profile', list: 'About' },
   { id: 'projects', label: 'View projects', list: 'Work' },
   { id: 'mail', label: 'Send an email', list: 'Inbox' },
 ]
@@ -33,7 +34,7 @@ export function Widgets({ onReminder }: Props) {
       <div className="widget widget--weather">
         <div className="widget-weather__top">
           <span className="widget-weather__city">hello world</span>
-          <PartlyCloudyIcon size={20} />
+          <PartlyCloudyIcon size={18} />
         </div>
         <div className="widget-weather__hero">
           <span className="widget-weather__temp">24°</span>
@@ -43,7 +44,7 @@ export function Widgets({ onReminder }: Props) {
           {forecast.map((slot) => (
             <div key={slot.time} className="widget-weather__slot">
               <span className="widget-weather__slot-time">{slot.time}</span>
-              <slot.Icon size={14} />
+              <slot.Icon size={12} />
               <span className="widget-weather__slot-temp">{slot.temp}°</span>
             </div>
           ))}
@@ -97,7 +98,7 @@ export function Widgets({ onReminder }: Props) {
       </div>
 
       <div className="widget widget--reminders">
-        <div className="widget-reminders__title">Reminders</div>
+        <div className="widget-reminders__title">Quick Actions</div>
         <ul className="widget-reminders__list">
           {reminders.map((item) => (
             <li key={item.id}>

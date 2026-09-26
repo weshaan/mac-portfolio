@@ -17,12 +17,12 @@ export function MenuBar() {
   return (
     <header className="menu-bar">
       <div className="menu-bar__left">
-        <button type="button" className="menu-bar__apple-btn" aria-label="Apple menu">
+        <button type="button" className="menu-bar__apple-btn" aria-label="weshaanOS menu">
           <AppleMenuIcon className="menu-bar__apple" />
         </button>
         <nav className="menu-bar__menus" aria-label="Application menu">
           <button type="button" className="menu-bar__item menu-bar__item--app">
-            Finder
+            weshaanOS
           </button>
           {menuItems.map((item) => (
             <button key={item} type="button" className="menu-bar__item">

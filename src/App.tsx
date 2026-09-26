@@ -8,7 +8,7 @@ import { MenuBar } from './components/MenuBar'
 import { Widgets } from './components/Widgets'
 import './App.css'
 
-type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | null
+type WindowId = DesktopItemId | 'mail' | 'terminal' | 'profile' | 'settings' | null
 
 const windowCopy: Record<Exclude<WindowId, null>, { title: string; body: ReactNode }> = {
   resume: {
@@ -99,6 +99,20 @@ Let's build something.`}
       </>
     ),
   },
+  settings: {
+    title: 'System Settings',
+    body: (
+      <>
+        <h2>weshaanOS</h2>
+        <p>Appearance, dock, and desktop preferences — customize this portfolio shell here.</p>
+        <ul>
+          <li>Wallpaper: Mikasa</li>
+          <li>Menu bar: maroon glass</li>
+          <li>Dock magnification: on</li>
+        </ul>
+      </>
+    ),
+  },
 }
 
 function App() {
@@ -136,6 +150,9 @@ function App() {
       case 'notes':
         open('projects')
         break
+      case 'settings':
+        open('settings')
+        break
       case 'calendar':
         open('projects')
         break
@@ -165,6 +182,7 @@ function App() {
           <Widgets
             onReminder={(action) => {
               if (action === 'resume') open('resume')
+              else if (action === 'profile') open('profile')
               else if (action === 'projects') open('projects')
               else open('mail')
             }}

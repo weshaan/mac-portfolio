@@ -48,9 +48,11 @@ function SystemIcon({ className, width, height, viewBox, paths }: SystemIconProp
   )
 }
 
-/** SF Symbol `apple.logo` — exported via sfsym (see src/assets/menu-bar/apple.svg) */
-const APPLE_LOGO_PATH =
-  'M21.5428 8.7287 C19.2286 8.5573 17.2286 10.043 16.1571 10.043 C15.0428 10.043 13.3286 8.7858 11.4857 8.8144 C9.1 8.8287 6.9143 10.2001 5.6571 12.3287 C3.2 16.643 5.0571 23.043 7.4571 26.5144 C8.6286 28.2572 10.0571 30.1715 11.9143 30.1144 C13.6857 30.0287 14.3571 28.943 16.5286 28.943 C18.7 28.943 19.2714 30.1144 21.1571 30.0572 C23.1 30.0287 24.2857 28.3287 25.5 26.6144 C26.8428 24.6001 27.4143 22.6858 27.4286 22.5858 C27.3714 22.5858 23.6857 21.1572 23.6571 16.9001 C23.6286 13.343 26.5714 11.6001 26.6857 11.5287 C25.0143 9.0858 22.4286 8.8144 21.5428 8.7287 Z M20.1 6.4287 C21.0857 5.2287 21.7428 3.5858 21.5714 1.9287 C20.1571 1.9716 18.4428 2.8716 17.4143 4.0573 C16.5286 5.1144 15.7286 6.8144 15.9428 8.4144 C17.5286 8.5287 19.1286 7.6144 20.1 6.4287 Z'
+/** weshaanOS menu mark — smile face (see src/assets/menu-bar/smile.svg) */
+const SMILE_FACE = {
+  mouth: 'M9.5 16.5c1.8 2.4 3.8 3.5 4.5 3.5s2.7-1.1 4.5-3.5',
+  eyes: 'M10.25 12a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Zm7.5 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Z',
+}
 
 /** SF Symbol `wifi` — exported via sfsym (see src/assets/menu-bar/wifi.svg) */
 const WIFI_PATHS = [
@@ -64,13 +66,25 @@ const BLUETOOTH_PATH =
 
 export function AppleMenuIcon({ className }: { className?: string }) {
   return (
-    <SystemIcon
+    <svg
       className={className}
-      width={12}
-      height={15}
-      viewBox="2.7 1.4287 25.2286 29.2428"
-      paths={[APPLE_LOGO_PATH]}
-    />
+      width={14}
+      height={14}
+      viewBox="0 0 28 28"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" strokeWidth="1.75" />
+      <path fill="currentColor" d={SMILE_FACE.eyes} />
+      <path
+        d={SMILE_FACE.mouth}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.65"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 

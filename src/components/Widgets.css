@@ -21,6 +21,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--widget-gap);
+  flex-shrink: 0;
+}
+
+/* Rail scrolls — never squash widget height (was clipping bottom text). */
+.widgets > .widget {
+  flex-shrink: 0;
 }
 
 .widget {
@@ -32,7 +38,7 @@
 }
 
 .widget--weather {
-  padding: 12px 12px 10px;
+  padding: 9px 10px 8px;
   background: linear-gradient(165deg, rgba(36, 58, 94, 0.96) 0%, rgba(22, 38, 68, 0.94) 100%);
   backdrop-filter: blur(32px) saturate(160%);
   -webkit-backdrop-filter: blur(32px) saturate(160%);
@@ -43,24 +49,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .widget-weather__city {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .widget-weather__hero {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 7px;
+  margin-bottom: 7px;
 }
 
 .widget-weather__temp {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 200;
   letter-spacing: -0.05em;
   line-height: 1;
@@ -70,14 +77,15 @@
 .widget-weather__condition {
   font-size: 10px;
   font-weight: 500;
+  line-height: 1.2;
   opacity: 0.85;
 }
 
 .widget-weather__forecast {
   display: flex;
   justify-content: space-between;
-  gap: 2px;
-  padding-top: 10px;
+  gap: 1px;
+  padding-top: 6px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.16);
 }
 
@@ -85,7 +93,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex: 1;
   min-width: 0;
 }
@@ -205,6 +213,7 @@
 .widget--calendar {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: start;
   padding: 12px 10px;
   background: rgba(38, 38, 40, 0.88);
   backdrop-filter: blur(28px) saturate(140%);
