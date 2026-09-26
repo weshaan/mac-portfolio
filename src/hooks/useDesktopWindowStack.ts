@@ -14,13 +14,13 @@ function centerWindow(width: number, height: number): WindowPoint {
   return { x, y }
 }
 
-/** Welcome About — horizontally centered on screen, upper workspace. */
+/** Welcome About — left of center (right edge at mid-screen), vertically centered. */
 function aboutWindowPosition(): WindowPoint {
-  if (typeof window === 'undefined') return { x: 400, y: 140 }
-  const menu = 28
+  if (typeof window === 'undefined') return { x: 332, y: 376 }
   const width = Math.min(440, Math.round(window.innerWidth * 0.92))
-  const x = Math.round((window.innerWidth - width) / 2)
-  const y = Math.round(menu + window.innerHeight * 0.11)
+  const approxHeight = 248
+  const x = Math.round(window.innerWidth / 2 - width) + 84
+  const y = Math.round((window.innerHeight - approxHeight) / 2) + 96
   return { x, y }
 }
 

@@ -128,9 +128,16 @@ function App() {
   const aboutWelcomeOpened = useRef(false)
 
   useEffect(() => {
-    if (!unlocked || aboutWelcomeOpened.current) return
-    aboutWelcomeOpened.current = true
-    openWindow('profile')
+    if (!unlocked) return
+    if (aboutWelcomeOpened.current) return
+
+    const id = window.setTimeout(() => {
+      if (aboutWelcomeOpened.current) return
+      aboutWelcomeOpened.current = true
+      openWindow('profile')
+    }, 1000)
+
+    return () => window.clearTimeout(id)
   }, [unlocked, openWindow])
 
   const open = useCallback(
